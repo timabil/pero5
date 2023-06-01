@@ -2,5 +2,8 @@
   "type": "module",
   "devDependencies": {
     "ethers": "^5.7.2"
+  },
+  "dependencies": {
+    "chalk": "^5.2.0"
   }
 }

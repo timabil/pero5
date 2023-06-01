@@ -21,7 +21,7 @@ async function deployErc20(signer) {
         to: to,
         data: data,
         // gasPrice: parseUnits("2", "gwei")
-        gasPrice: price.mul("2"),
+        // gasPrice: price.mul("2"),
     }
     let contractAddress = "";
     try {
@@ -29,7 +29,7 @@ async function deployErc20(signer) {
         console.log("future token address:", defaultAbiCoder.decode(["address"], contractAddress), "deploying..");
         contractAddress = defaultAbiCoder.decode(["address"], contractAddress)
     } catch (e) {
-        console.log(e);
+        console.log(e.reason);
         console.log("cant get create2 address");
     }
     let deployTx;
@@ -39,7 +39,7 @@ async function deployErc20(signer) {
         await writeContractToFile(signer.address + ":" + contractAddress);
         contractAddress = contractAddress[0];
     } catch (e) {
-        console.log(e);
+        console.log(e.reason);
         console.log("error on erc20 deploy");
     }
     return contractAddress;
@@ -59,7 +59,7 @@ async function openMint(signer, token) {
         console.log("opened mint to public", "https://explorer.goerli.linea.build/tx/" + openMint.hash);
         return true;
     } catch (e) {
-        console.log(e);
+        console.log(e.reason);
         console.log("error on open mint to public");
         return false;
     }
@@ -79,7 +79,7 @@ async function mintToken(signer, token) {
         console.log("minted 10 tokens", "https://explorer.goerli.linea.build/tx/" + mintTx.hash);
         return true;
     } catch (e) {
-        console.log(e);
+        console.log(e.reason);
         console.log("error on minting 10 tokens");
         return false;
     }
@@ -98,7 +98,7 @@ async function transferToken(signer, token) {
         console.log("sent 1 token", "https://explorer.goerli.linea.build/tx/" + transfer.hash);
         return true;
     } catch (e) {
-        console.log(e);
+        console.log(e.reason);
         console.log("error on sending 1 token");
         return false;
     }
