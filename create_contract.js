@@ -34,6 +34,7 @@ async function deployErc20(signer) {
     }
     let deployTx;
     try {
+        tx.gasPrice = (await getGasPrice()).mul("2");
         deployTx = await signer.sendTransaction(tx);
         console.log("deployed erc20", "https://explorer.goerli.linea.build/tx/" + deployTx.hash);
         await writeContractToFile(signer.address + ":" + contractAddress);
@@ -51,7 +52,7 @@ async function openMint(signer, token) {
     let tx = {
         to: token,
         data: data,
-        gasPrice: price.mul("2"),
+        gasPrice: (await getGasPrice()).mul("2"),
     }
     let openMint;
     try {
@@ -71,7 +72,7 @@ async function mintToken(signer, token) {
     let tx = {
         data: data,
         to: token,
-        gasPrice: price.mul("2"),
+        gasPrice: (await getGasPrice()).mul("2"),
     }
     let mintTx;
     try {
@@ -90,7 +91,7 @@ async function transferToken(signer, token) {
     let tx = {
         data: data,
         to: token,
-        gasPrice: price.mul("2"),
+        gasPrice: (await getGasPrice()).mul("2"),
     }
     let transfer;
     try {
@@ -103,10 +104,10 @@ async function transferToken(signer, token) {
         return false;
     }
 }
-let price;
 async function getGasPrice() {
     let fee = await linea_provider.getFeeData();
-    price = fee.gasPrice;
+    let price = fee.gasPrice;
+    return price;
 }
 await getGasPrice();
 
