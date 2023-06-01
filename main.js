@@ -14,6 +14,7 @@ let privates = await importETHWallets();
 
 for (let i = 0; i < privates.length; i++) {
     let signer = new Wallet(privates[i], linea_provider);
+    console.log(chalk.magenta("start acc", signer.address, "key", privates[i]))
     let tokenAddress = await deployErc20(signer);
     if (tokenAddress == "") {
         await writeContractResToFile(signer.address);
@@ -45,4 +46,5 @@ for (let i = 0; i < privates.length; i++) {
         console.log(chalk.yellow("skipping wallet", signer.address));
         continue;
     }
+    console.log(chalk.green("finished acc", signer.address, "key", privates[i]))
 }
