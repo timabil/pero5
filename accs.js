@@ -35,22 +35,22 @@ export const writeContractToFile = async (data) => {
 };
 
 export const writeContractResToFile = async (data) => {
-  fs.writeFile("./failed_contract.txt", data, (err) => {
+  fs.appendFileSync("./failed_contract.txt", data, (err) => {
     if (err) throw err;
   })
 };
 export const writeOpenResToFile = async (data) => {
-  fs.writeFile("./failed_open.txt", data, (err) => {
+  fs.appendFileSync("./failed_open.txt", data, (err) => {
     if (err) throw err;
   })
 };
 export const writeMintResToFile = async (data) => {
-  fs.writeFile("./failed_mint.txt", data, (err) => {
+  fs.appendFileSync("./failed_mint.txt", data, (err) => {
     if (err) throw err;
   })
 };
 export const writeTransferResToFile = async (data) => {
-  fs.writeFile("./failed_transfer.txt", data, (err) => {
+  fs.appendFileSync("./failed_transfer.txt", data, (err) => {
     if (err) throw err;
   })
 };
