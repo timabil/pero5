@@ -34,6 +34,11 @@ export const writeContractToFile = async (data) => {
   })
 };
 
+export const writeResultsToFile = async (file, data) => {
+  fs.appendFile(`./${file}.txt`, data + "\n", (err) => {
+    if (err) throw err;
+  })
+};
 export const writeContractResToFile = async (data) => {
   fs.appendFile("./failed_contract.txt", data + "\n", (err) => {
     if (err) throw err;

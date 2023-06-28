@@ -1,8 +1,8 @@
 import { parseUnits } from "@ethersproject/units";
-import { sleep, linea_provider } from "./utils.js";
+import { sleep, linea_provider } from "../utils.js";
 import { BigNumber, Wallet, ethers } from "ethers";
 import { defaultAbiCoder } from "@ethersproject/abi";
-import { importETHWallets, writeContractToFile} from "./accs.js";
+import { importETHWallets, writeContractToFile} from "../accs.js";
 
 function getRandomSalt() {
     let base = BigNumber.from("61784013878581");
