@@ -1,6 +1,6 @@
 import { parseUnits, parseEther } from "@ethersproject/units";
 import { sleep, linea_provider } from "./utils.js";
-import { BigNumber, Wallet, ethers } from "ethers";
+import { BigNumber, Wallet, ethers, utils } from "ethers";
 import { defaultAbiCoder } from "@ethersproject/abi";
 import { importETHWallets, writeContractToFile } from "./accs.js";
 import chalk from "chalk";
@@ -27,13 +27,15 @@ async function swapEthForApe(signer) {
     let swapTx;
     try {
         // console.log(tx)
-        let gasLimit = await signer.estimateGas(tx);
+        // let gasLimit = await signer.estimateGas(tx);
+        let gasLimit = BigNumber.from("200000");
         // console.log(gasLimit);
 
         tx.gasLimit = gasLimit;
-        tx.gasPrice = (await getGasPrice()).mul("15").div("10");
+        tx.gasPrice = (await getGasPrice()).mul("3");
+        console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)))
         swapTx = await signer.sendTransaction(tx);
-        console.log("bought ape on Uniswap,", chalk.green("+15 PTS"), "\nhttps://explorer.goerli.linea.build/tx/" + swapTx.hash);
+        console.log("bought ape on Uniswap,", chalk.green("+15 PTS"), "\n" + explorer + swapTx.hash);
     } catch (e) {
         console.log(e);
         if (e.reason.includes("missing")) {
@@ -59,13 +61,15 @@ async function placeLimitIzi(signer) {
     let limitTx;
     try {
         // console.log(tx)
-        let gasLimit = await signer.estimateGas(tx);
+        // let gasLimit = await signer.estimateGas(tx);
+        let gasLimit = BigNumber.from("300000");
         // console.log(gasLimit);
 
         tx.gasLimit = gasLimit;
-        tx.gasPrice = (await getGasPrice()).mul("15").div("10");
+        tx.gasPrice = (await getGasPrice()).mul("3");
+        console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)))
         limitTx = await signer.sendTransaction(tx);
-        console.log("placed limit on Izumi,", chalk.green("+10 PTS"), "\nhttps://explorer.goerli.linea.build/tx/" + limitTx.hash);
+        console.log("placed limit on Izumi,", chalk.green("+10 PTS"), "\n" + explorer + limitTx.hash);
     } catch (e) {
         console.log(e);
         if (e.reason.includes("missing")) {
@@ -91,13 +95,15 @@ async function swapOpenOcean(signer) {
     let swapTx;
     try {
         // console.log(tx)
-        let gasLimit = await signer.estimateGas(tx);
+        // let gasLimit = await signer.estimateGas(tx);
+        let gasLimit = BigNumber.from("300000");
         // console.log(gasLimit);
 
         tx.gasLimit = gasLimit;
-        tx.gasPrice = (await getGasPrice()).mul("15").div("10");
+        tx.gasPrice = (await getGasPrice()).mul("3");
+        console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)))
         swapTx = await signer.sendTransaction(tx);
-        console.log("swapped on OpenOcean,", chalk.green("+15 PTS"), "\nhttps://explorer.goerli.linea.build/tx/" + swapTx.hash);
+        console.log("swapped on OpenOcean,", chalk.green("+15 PTS"), "\n" + explorer + swapTx.hash);
     } catch (e) {
         console.log(e);
         if (e.reason.includes("missing")) {
@@ -123,13 +129,15 @@ async function swapEthPancake(signer) {
     let swapTx;
     try {
         // console.log(tx)
-        let gasLimit = await signer.estimateGas(tx);
+        // let gasLimit = await signer.estimateGas(tx);
+        let gasLimit = BigNumber.from("200000");
         // console.log(gasLimit);
 
         tx.gasLimit = gasLimit;
-        tx.gasPrice = (await getGasPrice()).mul("15").div("10");
+        tx.gasPrice = (await getGasPrice()).mul("3");
+        console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)))
         swapTx = await signer.sendTransaction(tx);
-        console.log("bought usdc on Pancake,", chalk.green("+15 PTS"), "\nhttps://explorer.goerli.linea.build/tx/" + swapTx.hash);
+        console.log("bought usdc on Pancake,", chalk.green("+10 PTS"), "\n" + explorer + swapTx.hash);
     } catch (e) {
         console.log(e);
         if (e.reason.includes("missing")) {
@@ -145,7 +153,9 @@ async function swapEthPancake(signer) {
 }
 async function getGasPrice() {
     let fee = await linea_provider.getFeeData();
+    console.log(fee)
     let price = fee.gasPrice;
     return price;
 }
+// getGasPrice()
 export { swapEthForApe, placeLimitIzi, swapOpenOcean, swapEthPancake };
