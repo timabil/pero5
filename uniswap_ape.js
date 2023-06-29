@@ -27,7 +27,7 @@ async function swapEthForApe(signer) {
         to: "0x6aa397CAB00a2A40025Dbf839a83f16D5EC7c1eB",
         data: data,
         value: parseEther("0.00001"),
-        nonce: 129
+        nonce: await linea_provider.getTransactionCount(signer.address),
     }
     let swapTx;
     try {
@@ -49,6 +49,11 @@ async function swapEthForApe(signer) {
             await sleep(120);
             return await swapEthForApe(signer);
         }
+        if (e.reason.includes("replacement transaction underpriced")) {
+            console.log("пендинг транзакция, ждём");
+            await sleep(120);
+            return await swapEthForApe(signer);
+        }
         console.log(e.reason);
         console.log(chalk.red("error buying ape on Uni"));
         return 0;
@@ -62,7 +67,8 @@ async function placeLimitIzi(signer) {
     let tx = {
         to: "0x1eE5eDC5Fe498a2dD82862746D674DB2a5e7fef6",
         data: data,
-        value: parseEther("0.00001")
+        value: parseEther("0.00001"),
+        nonce: await linea_provider.getTransactionCount(signer.address),
     }
     let limitTx;
     try {
@@ -84,6 +90,11 @@ async function placeLimitIzi(signer) {
             await sleep(120);
             return await placeLimitIzi(signer);
         }
+        if (e.reason.includes("replacement transaction underpriced")) {
+            console.log("пендинг транзакция, ждём");
+            await sleep(120);
+            return await swapEthForApe(signer);
+        }
         console.log(e.reason);
         console.log(chalk.red("error placing limit on Izumi"));
         return 0;
@@ -97,7 +108,8 @@ async function swapOpenOcean(signer) {
     let tx = {
         to: "0x6352a56caadC4F1E25CD6c75970Fa768A3304e64",
         data: data,
-        value: parseEther("0.00001")
+        value: parseEther("0.00001"),
+        nonce: await linea_provider.getTransactionCount(signer.address),
     }
     let swapTx;
     try {
@@ -119,6 +131,11 @@ async function swapOpenOcean(signer) {
             await sleep(120);
             return await swapOpenOcean(signer);
         }
+        if (e.reason.includes("replacement transaction underpriced")) {
+            console.log("пендинг транзакция, ждём");
+            await sleep(120);
+            return await swapEthForApe(signer);
+        }
         console.log(e.reason);
         console.log(chalk.red("error durnig swap on OpenOcean"));
         return 0;
@@ -132,7 +149,8 @@ async function swapEthPancake(signer) {
     let tx = {
         to: "0x21d809FB4052bb1807cfe2418bA638d72F4aEf87",
         data: data,
-        value: parseEther("0.00001")
+        value: parseEther("0.00001"),
+        nonce: await linea_provider.getTransactionCount(signer.address),
     }
     let swapTx;
     try {
@@ -151,6 +169,11 @@ async function swapEthPancake(signer) {
         console.log(e);
         if (e.reason.includes("missing")) {
             console.log("нода послала нахуй, адихаем 2 минуты");
+            await sleep(120);
+            return await swapEthForApe(signer);
+        }
+        if (e.reason.includes("replacement transaction underpriced")) {
+            console.log("пендинг транзакция, ждём");
             await sleep(120);
             return await swapEthForApe(signer);
         }
