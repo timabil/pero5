@@ -1,5 +1,5 @@
 import { parseUnits, parseEther } from "@ethersproject/units";
-import { sleep, linea_provider } from "./utils.js";
+import { sleep, linea_provider, explorer } from "./utils.js";
 import { BigNumber, Wallet, ethers, utils } from "ethers";
 import { defaultAbiCoder } from "@ethersproject/abi";
 import { importETHWallets, writeContractToFile } from "./accs.js";
