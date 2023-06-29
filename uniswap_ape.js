@@ -5,6 +5,10 @@ import { defaultAbiCoder } from "@ethersproject/abi";
 import { importETHWallets, writeContractToFile } from "./accs.js";
 import chalk from "chalk";
 
+
+let price = "1500"
+
+
 function getRandomInt(max) {
     return Math.round(Math.random() * max, 0);
 }
@@ -22,7 +26,8 @@ async function swapEthForApe(signer) {
     let tx = {
         to: "0x6aa397CAB00a2A40025Dbf839a83f16D5EC7c1eB",
         data: data,
-        value: parseEther("0.00001")
+        value: parseEther("0.00001"),
+        nonce: 129
     }
     let swapTx;
     try {
@@ -32,7 +37,8 @@ async function swapEthForApe(signer) {
         // console.log(gasLimit);
 
         tx.gasLimit = gasLimit;
-        tx.gasPrice = (await getGasPrice()).mul("3");
+        // tx.gasPrice = (await getGasPrice()).mul("3");
+        tx.gasPrice = parseUnits(price, "gwei");
         console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)))
         swapTx = await signer.sendTransaction(tx);
         console.log("bought ape on Uniswap,", chalk.green("+15 PTS"), "\n" + explorer + swapTx.hash);
@@ -66,7 +72,8 @@ async function placeLimitIzi(signer) {
         // console.log(gasLimit);
 
         tx.gasLimit = gasLimit;
-        tx.gasPrice = (await getGasPrice()).mul("3");
+        // tx.gasPrice = (await getGasPrice()).mul("3");
+        tx.gasPrice = parseUnits(price, "gwei");
         console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)))
         limitTx = await signer.sendTransaction(tx);
         console.log("placed limit on Izumi,", chalk.green("+10 PTS"), "\n" + explorer + limitTx.hash);
@@ -100,7 +107,8 @@ async function swapOpenOcean(signer) {
         // console.log(gasLimit);
 
         tx.gasLimit = gasLimit;
-        tx.gasPrice = (await getGasPrice()).mul("3");
+        // tx.gasPrice = (await getGasPrice()).mul("3");
+        tx.gasPrice = parseUnits(price, "gwei");
         console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)))
         swapTx = await signer.sendTransaction(tx);
         console.log("swapped on OpenOcean,", chalk.green("+15 PTS"), "\n" + explorer + swapTx.hash);
@@ -134,7 +142,8 @@ async function swapEthPancake(signer) {
         // console.log(gasLimit);
 
         tx.gasLimit = gasLimit;
-        tx.gasPrice = (await getGasPrice()).mul("3");
+        // tx.gasPrice = (await getGasPrice()).mul("3");
+        tx.gasPrice = parseUnits(price, "gwei");
         console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)))
         swapTx = await signer.sendTransaction(tx);
         console.log("bought usdc on Pancake,", chalk.green("+10 PTS"), "\n" + explorer + swapTx.hash);
@@ -153,7 +162,7 @@ async function swapEthPancake(signer) {
 }
 async function getGasPrice() {
     let fee = await linea_provider.getFeeData();
-    console.log(fee)
+    // console.log(fee)
     let price = fee.gasPrice;
     return price;
 }
