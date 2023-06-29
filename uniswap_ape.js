@@ -43,13 +43,13 @@ async function swapEthForApe(signer) {
         swapTx = await signer.sendTransaction(tx);
         console.log("bought ape on Uniswap,", chalk.green("+15 PTS"), "\n" + explorer + swapTx.hash);
     } catch (e) {
-        console.log(e);
+        // console.log(e);
         if (e.reason.includes("missing")) {
             console.log("нода послала нахуй, адихаем 2 минуты");
             await sleep(120);
             return await swapEthForApe(signer);
         }
-        if (e.reason.includes("replacement transaction underpriced")) {
+        if (e.reason.includes("replacement") || e.body.includes("already known")) {
             console.log("пендинг транзакция, ждём");
             await sleep(120);
             return await swapEthForApe(signer);
@@ -84,13 +84,13 @@ async function placeLimitIzi(signer) {
         limitTx = await signer.sendTransaction(tx);
         console.log("placed limit on Izumi,", chalk.green("+10 PTS"), "\n" + explorer + limitTx.hash);
     } catch (e) {
-        console.log(e);
+        // console.log(e);
         if (e.reason.includes("missing")) {
             console.log("нода послала нахуй, адихаем 2 минуты");
             await sleep(120);
             return await placeLimitIzi(signer);
         }
-        if (e.reason.includes("replacement transaction underpriced")) {
+        if (e.reason.includes("replacement") || e.body.includes("already known")) {
             console.log("пендинг транзакция, ждём");
             await sleep(120);
             return await swapEthForApe(signer);
@@ -125,13 +125,13 @@ async function swapOpenOcean(signer) {
         swapTx = await signer.sendTransaction(tx);
         console.log("swapped on OpenOcean,", chalk.green("+15 PTS"), "\n" + explorer + swapTx.hash);
     } catch (e) {
-        console.log(e);
+        // console.log(e);
         if (e.reason.includes("missing")) {
             console.log("нода послала нахуй, адихаем 2 минуты");
             await sleep(120);
             return await swapOpenOcean(signer);
         }
-        if (e.reason.includes("replacement transaction underpriced")) {
+        if (e.reason.includes("replacement") || e.body.includes("already known")) {
             console.log("пендинг транзакция, ждём");
             await sleep(120);
             return await swapEthForApe(signer);
@@ -166,13 +166,13 @@ async function swapEthPancake(signer) {
         swapTx = await signer.sendTransaction(tx);
         console.log("bought usdc on Pancake,", chalk.green("+10 PTS"), "\n" + explorer + swapTx.hash);
     } catch (e) {
-        console.log(e);
+        // console.log(e);
         if (e.reason.includes("missing")) {
             console.log("нода послала нахуй, адихаем 2 минуты");
             await sleep(120);
             return await swapEthForApe(signer);
         }
-        if (e.reason.includes("replacement transaction underpriced")) {
+        if (e.reason.includes("replacement") || e.body.includes("already known")) {
             console.log("пендинг транзакция, ждём");
             await sleep(120);
             return await swapEthForApe(signer);
