@@ -54,7 +54,7 @@ async function swapEthForApe(signer) {
             await sleep(120);
             return await swapEthForApe(signer);
         }
-        if (e.reason.includes("replacement") || e.body.includes("already known")) {
+        if (e.reason.includes("replacement")) {
             console.log("пендинг транзакция, ждём");
             await sleep(120);
             return await swapEthForApe(signer);
@@ -100,7 +100,7 @@ async function placeLimitIzi(signer) {
             await sleep(120);
             return await placeLimitIzi(signer);
         }
-        if (e.reason.includes("replacement") || e.body.includes("already known")) {
+        if (e.reason.includes("replacement")) {
             console.log("пендинг транзакция, ждём");
             await sleep(120);
             return await swapEthForApe(signer);
@@ -144,7 +144,7 @@ async function swapOpenOcean(signer) {
             await sleep(120);
             return await swapOpenOcean(signer);
         }
-        if (e.reason.includes("replacement") || e.body.includes("already known")) {
+        if (e.reason.includes("replacement")) {
             console.log("пендинг транзакция, ждём");
             await sleep(120);
             return await swapEthForApe(signer);
@@ -190,7 +190,7 @@ async function swapEthPancake(signer) {
             await sleep(120);
             return await swapEthForApe(signer);
         }
-        if (e.reason.includes("replacement") || e.body.includes("already known")) {
+        if (e.reason.includes("replacement")) {
             console.log("пендинг транзакция, ждём");
             await sleep(120);
             return await swapEthForApe(signer);
