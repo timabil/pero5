@@ -6,7 +6,7 @@ import { importETHWallets, writeContractToFile } from "./accs.js";
 import chalk from "chalk";
 
 
-let price = "1500"
+let price = "2000"
 
 
 function getRandomInt(max) {
@@ -37,9 +37,14 @@ async function swapEthForApe(signer) {
         // console.log(gasLimit);
 
         tx.gasLimit = gasLimit;
-        // tx.gasPrice = (await getGasPrice()).mul("3");
-        tx.gasPrice = parseUnits(price, "gwei");
-        console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)))
+        tx.gasPrice = (await getGasPrice()).mul("11").div("10");
+        // tx.gasPrice = parseUnits(price, "gwei");
+        console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)));
+        while (gasLimit.mul(await getGasPrice()).gte("800000000000000000")) {
+            await sleep(15);
+            console.log("too much eth needed, sleeping");
+        }
+        tx.gasPrice = (await getGasPrice()).mul("11").div("10");
         swapTx = await signer.sendTransaction(tx);
         console.log("bought ape on Uniswap,", chalk.green("+15 PTS"), "\n" + explorer + swapTx.hash);
     } catch (e) {
@@ -78,9 +83,14 @@ async function placeLimitIzi(signer) {
         // console.log(gasLimit);
 
         tx.gasLimit = gasLimit;
-        // tx.gasPrice = (await getGasPrice()).mul("3");
-        tx.gasPrice = parseUnits(price, "gwei");
-        console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)))
+        tx.gasPrice = (await getGasPrice()).mul("11").div("10");
+        // tx.gasPrice = parseUnits(price, "gwei");
+        console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)));
+        while (gasLimit.mul(await getGasPrice()).gte("800000000000000000")) {
+            await sleep(15);
+            console.log("too much eth needed, sleeping");
+        }
+        tx.gasPrice = (await getGasPrice()).mul("11").div("10");
         limitTx = await signer.sendTransaction(tx);
         console.log("placed limit on Izumi,", chalk.green("+10 PTS"), "\n" + explorer + limitTx.hash);
     } catch (e) {
@@ -102,8 +112,6 @@ async function placeLimitIzi(signer) {
     return 10;
 }
 async function swapOpenOcean(signer) {
-    let hexDeadline = getRandomDeadline().toString(16);
-    // console.log(hexDeadline)
     let data = `0x90411a320000000000000000000000002b5f704ab7061fb4dbfc5876b024f4bdb2f5e8b6000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000001c0000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000000000000000000000000b77c5a8426ee2af0ef2a69fe1202dbaffd0fbddf0000000000000000000000002b5f704ab7061fb4dbfc5876b024f4bdb2f5e8b6000000000000000000000000${signer.address.slice(2)}000000000000000000000000000000000000000000000000000009184e72a00000000000000000000000000000000000000000000000000000000000000018dc00000000000000000000000000000000000000000000000000000000000031b800000000000000000000000000000000000000000000000000000000000000000000000000000000000000003487ef9f9b36547e43268b8f0e2349a226c70b53000000000000000000000000000000000000000000000000000000000000014000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000001000000000000000000000000002c1b868d6596a18e32e61b901e4060c872647b6c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009184e72a00000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000004d0e30db000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000002449f8654220000000000000000000000002c1b868d6596a18e32e61b901e4060c872647b6c00000000000000000000000000000001000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000004400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000104e5b07cdb0000000000000000000000006c08d9be233151c45a155aefbcbbbb16ba04dd6a00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000${signer.address.slice(2)}00000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000002e2c1b868d6596a18e32e61b901e4060c872647b6c000bb8b77c5a8426ee2af0ef2a69fe1202dbaffd0fbddf0000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000`;
     let tx = {
         to: "0x6352a56caadC4F1E25CD6c75970Fa768A3304e64",
@@ -119,9 +127,14 @@ async function swapOpenOcean(signer) {
         // console.log(gasLimit);
 
         tx.gasLimit = gasLimit;
-        // tx.gasPrice = (await getGasPrice()).mul("3");
-        tx.gasPrice = parseUnits(price, "gwei");
-        console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)))
+        tx.gasPrice = (await getGasPrice()).mul("11").div("10");
+        // tx.gasPrice = parseUnits(price, "gwei");
+        console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)));
+        while (gasLimit.mul(await getGasPrice()).gte("800000000000000000")) {
+            await sleep(15);
+            console.log("too much eth needed, sleeping");
+        }
+        tx.gasPrice = (await getGasPrice()).mul("11").div("10");
         swapTx = await signer.sendTransaction(tx);
         console.log("swapped on OpenOcean,", chalk.green("+15 PTS"), "\n" + explorer + swapTx.hash);
     } catch (e) {
@@ -160,9 +173,14 @@ async function swapEthPancake(signer) {
         // console.log(gasLimit);
 
         tx.gasLimit = gasLimit;
-        // tx.gasPrice = (await getGasPrice()).mul("3");
-        tx.gasPrice = parseUnits(price, "gwei");
+        tx.gasPrice = (await getGasPrice()).mul("11").div("10");
+        // tx.gasPrice = parseUnits(price, "gwei");
         console.log("total eth needed for tx:", utils.formatEther(gasLimit.mul(tx.gasPrice)))
+        while (gasLimit.mul(await getGasPrice()).gte("800000000000000000")) {
+            await sleep(15);
+            console.log("too much eth needed, sleeping");
+        }
+        tx.gasPrice = (await getGasPrice()).mul("11").div("10");
         swapTx = await signer.sendTransaction(tx);
         console.log("bought usdc on Pancake,", chalk.green("+10 PTS"), "\n" + explorer + swapTx.hash);
     } catch (e) {
